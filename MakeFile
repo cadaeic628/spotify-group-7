@@ -1,0 +1,15 @@
+# Variables
+TARQL_PATH = .\tarql-1.2\bin\tarql.bat
+DELIMITER = ","
+OUTPUT_FORMAT = --ntriples
+EXTENSION = ttl
+
+# Regla principal
+run:
+	if not "$(QUERY)"=="" if not "$(DATA)"=="" ( \
+		$(TARQL_PATH) $(OUTPUT_FORMAT) -d $(DELIMITER) $(QUERY) $(DATA) > $(DATA:.csv=).$(EXTENSION) && \
+		echo Archivo RDF generado: $(DATA:.csv=).$(EXTENSION) \
+	) else ( \
+		echo ERROR: Debes especificar QUERY y DATA como argumentos && \
+		echo Uso: make run QUERY=example.sparql DATA=data.csv \
+	)
