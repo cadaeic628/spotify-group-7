@@ -7,11 +7,17 @@ CONSTRUCT {
         ex:hasName ?name ;
         ex:Artist ?artist ;
         ex:Album ?album ;
-        ex:characteristics ?characteristics .
+        ex:characteristics ?characteristics ;
+        ex:hasDailyRank [
+            ex:county ?county ;
+            ex:snapshotDate ?snapshot_date^^xsd:date ;
+            ex:ranking ?daily_rank ;
+            ex:popularity ?popularity
+        ] .
     ?album a ex:Album ;
         ex:hasName ?album_name ;
         ex:artist ?artist ;
-        ex:releaseDate ?album_release_date .
+        ex:releaseDate ?album_release_date^^xsd:date .
     ?artist a ex:Artist ;
         ex:hasName ?artist ;
         ex:hasSong ?Song ;
@@ -38,24 +44,4 @@ WHERE {
     BIND(IRI(CONCAT("http://example.com/artist/", ENCODE_FOR_URI(?artist))) AS ?Artist)
     BIND(IRI(CONCAT("http://example.com/album/", ENCODE_FOR_URI(?album))) AS ?Album)
     BIND(IRI(CONCAT("http://example.com/characteristics/", ENCODE_FOR_URI(?spotifyID))) AS ?characteristics)
-    ?spotify_id CSV ?spotify_id .
-    ?name CSV ?name .
-    ?artist CSV ?artists .
-    ?album_name CSV ?album_name .
-    ?album_release_date CSV ?album_release_date .
-    ?is_explicit CSV ?is_explicit .
-    ?danceability CSV ?danceability .
-    ?duration_ms CSV ?duration_ms .
-    ?energy CSV ?energy .
-    ?key CSV ?key .
-    ?loudness CSV ?loudness .
-    ?mode CSV ?mode .
-    ?speechiness CSV ?speechiness .
-    ?acousticness CSV ?acousticness .
-    ?instrumentalness CSV ?instrumentalness .
-    ?liveness CSV ?liveness .
-    ?valence CSV ?valence .
-    ?tempo CSV ?tempo .
-    ?time_signature CSV ?time_signature .
-
 }
