@@ -1,0 +1,61 @@
+PREFIX ex: <http://example.com/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+    ?song a ex:Song ;
+        ex:spotifyID ?spotify_id ;
+        ex:hasName ?name ;
+        ex:Artist ?artist ;
+        ex:Album ?album ;
+        ex:characteristics ?characteristics .
+    ?album a ex:Album ;
+        ex:hasName ?album_name ;
+        ex:artist ?artist ;
+        ex:releaseDate ?album_release_date .
+    ?artist a ex:Artist ;
+        ex:hasName ?artist ;
+        ex:hasSong ?Song ;
+        ex:hasAlbum ?Album .
+    ?characteristics a ex:characteristics ;
+        ex:isExplicit ?is_explicit ;
+        ex:hasDanceability ?danceability ;
+        ex:hasDuration ?duration_ms ;
+        ex:hasEnergy ?energy ;
+        ex:hasKey ?key ;
+        ex:hasLoudness ?loudness ;
+        ex:hasMode ?mode ;
+        ex:hasSpeechiness ?speechiness ;
+        ex:hasAcousticness ?acousticness ;
+        ex:hasInstrumentalness ?instrumentalness ;
+        ex:hasLiveness ?liveness ;
+        ex:hasValence ?valence ;
+        ex:hasTempo ?tempo ;
+        ex:timeSignature ?time_signature .
+}
+FROM <file:universal_top_spotify_songs.csv>
+WHERE {
+    BIND(IRI(CONCAT("http://example.com/song/", ENCODE_FOR_URI(?spotifyID))) AS ?Song)
+    BIND(IRI(CONCAT("http://example.com/artist/", ENCODE_FOR_URI(?artist))) AS ?Artist)
+    BIND(IRI(CONCAT("http://example.com/album/", ENCODE_FOR_URI(?album))) AS ?Album)
+    BIND(IRI(CONCAT("http://example.com/characteristics/", ENCODE_FOR_URI(?spotifyID))) AS ?characteristics)
+    ?spotify_id CSV ?spotify_id .
+    ?name CSV ?name .
+    ?artist CSV ?artists .
+    ?album_name CSV ?album_name .
+    ?album_release_date CSV ?album_release_date .
+    ?is_explicit CSV ?is_explicit .
+    ?danceability CSV ?danceability .
+    ?duration_ms CSV ?duration_ms .
+    ?energy CSV ?energy .
+    ?key CSV ?key .
+    ?loudness CSV ?loudness .
+    ?mode CSV ?mode .
+    ?speechiness CSV ?speechiness .
+    ?acousticness CSV ?acousticness .
+    ?instrumentalness CSV ?instrumentalness .
+    ?liveness CSV ?liveness .
+    ?valence CSV ?valence .
+    ?tempo CSV ?tempo .
+    ?time_signature CSV ?time_signature .
+
+}
